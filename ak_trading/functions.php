@@ -490,3 +490,11 @@ function add_custom_css() { ?>
 	</style>
 	<?php
 }
+
+add_filter( 'wp_enqueue_scripts', 'change_default_single_product_js', 999 );
+function change_default_single_product_js( ){
+    wp_dequeue_script( 'wooswipe-js');
+    wp_deregister_script( 'wooswipe-js');   
+    wp_register_script( 'wooswipe-js', get_stylesheet_directory_uri() . '/js/wooswipe.js', null, null, true );
+    wp_enqueue_script('wooswipe-js');
+}
