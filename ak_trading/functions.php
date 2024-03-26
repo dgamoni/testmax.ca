@@ -156,7 +156,7 @@ function jk_related_products_args( $args ) {
 }
 
 
-add_action('woocommerce_after_single_product_summary', 'add_form_on_products_page', 16);
+//add_action('woocommerce_after_single_product_summary', 'add_form_on_products_page', 16);
 function add_form_on_products_page () {
 	$thank_you =  get_permalink(70); 
 	$content ='<div class="product-contact-form">
@@ -442,4 +442,51 @@ function loop_columns() {
 	}
 }
 add_filter('loop_shop_columns', 'loop_columns', 999);
-?>
+
+
+
+// dgamoni
+
+add_action( 'after_setup_theme', 'layerswoo_theme_setup' );
+function layerswoo_theme_setup() {
+   add_theme_support( 'wc-product-gallery-zoom' );
+   add_theme_support( 'wc-product-gallery-lightbox' );
+   add_theme_support( 'wc-product-gallery-slider' );
+}
+
+add_filter( 'woocommerce_get_image_size_gallery_image', function( $size ) {
+return array(
+	'width' => 560,
+	'height' => 560,
+	'crop' => 1,
+	);
+} );
+
+add_action('wp_footer', 'add_custom_css');
+function add_custom_css() { ?>
+	<script>
+		jQuery(document).ready(function($) {
+
+		});
+	</script>
+	<style>
+		.woocommerce-main-image {
+		    cursor: inherit;
+		    cursor: inherit;
+		}
+		.woocommerce img.size-shop_single,
+		.woocommerce-page img.size-shop_single {
+		    height: 560px;
+		    object-fit: cover;
+		}
+		#wooswipe .thumbnails li {
+		    margin-right: 10px;
+		    margin-left: 0;
+		}
+		#wooswipe .slick-list {
+		    margin-left: 0px;
+		    margin-right: 0px;
+		}
+	</style>
+	<?php
+}
